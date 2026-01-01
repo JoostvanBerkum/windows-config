@@ -2,14 +2,5 @@ properties:
   resources:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
-        id: Zen-Team.Zen-Browser 
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      settings:
-        id: Akiflow.Akiflow
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      settings:
-        id: Python.Python.3.14
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      settings:
-        id: Notion.Notion
+        id: Python.Python.3.14  
   configurationVersion: 0.2.0
