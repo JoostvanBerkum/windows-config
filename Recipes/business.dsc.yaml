@@ -10,7 +10,7 @@ properties:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Microsoft.PowerToys 
-   - resource: Microsoft.WinGet.DSC/WinGetPackage
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Microsoft.VisualStudioCode
     - resource: Microsoft.WinGet.DSC/WinGetPackage
@@ -37,4 +37,4 @@ properties:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: TechSmith.Snagit.2025
-  configurationVersion: 0.1.0
+  configurationVersion: 0.1.1

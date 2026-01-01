@@ -11,5 +11,5 @@ properties:
         id: Microsoft.VisualStudio.Community.2022
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
-        id: SQLiteStudio.SQLiteStudio
-  configurationVersion: 0.1.0
+        id: PawelSalawa.SQLiteStudio
+  configurationVersion: 0.1.1

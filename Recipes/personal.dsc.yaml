@@ -24,10 +24,10 @@ properties:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Spotify.Spotify
-- resource: Microsoft.WinGet.DSC/WinGetPackage
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Notion.Notion
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Microsoft.YourPhone # Dit is Phone Link
-  configurationVersion: 0.1.0
+  configurationVersion: 0.1.1
