@@ -27,14 +27,14 @@ properties:
         id: Ghisler.TotalCommander
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
-        id: 1Password.1Password
+        id: AgileBits.1Password
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Google.Chrome
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
-        id: Armin222.AutoDarkMode # De app voor automatische Dark/Light switch
+        id: ArminOsaj.AutoDarkMode # De app voor automatische Dark/Light switch
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: TechSmith.Snagit.2025
-  configurationVersion: 0.1.1
+  configurationVersion: 0.2.0
