@@ -2,7 +2,14 @@ properties:
   resources:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
-        id: 9NCBCSZMSX81  # De exacte Store-ID voor Spotify
-        source: msstore
-        installMode: silent
-  configurationVersion: 0.2.4
+        id: Zen-Team.Zen-Browser 
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      settings:
+        id: Akiflow.Akiflow
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      settings:
+        id: Python.Python.3.14
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      settings:
+        id: Notion.Notion
+  configurationVersion: 0.2.5

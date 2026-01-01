@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+properties:
+  resources:
+    # Stap 1: Configureer WinGet om bronnen automatisch te accepteren
+    - resource: Microsoft.WinGet.DSC/WinGetSetting
+      directives:
+        description: Accepteer de bronovereenkomsten automatisch
+        allowPrerelease: true
+      settings:
+        security:
+          anySource: true # Hiermee sta je toe dat bronnen zoals msstore zonder extra prompt werken
+
+    # Stap 2: Installeer Spotify
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      dependsOn:
+        - Microsoft.WinGet.DSC/WinGetSetting
+      settings:
+        id: 9NCBCSZMSX81
+        source: msstore
+        installMode: silent
+
+  configurationVersion: 0.1.0
