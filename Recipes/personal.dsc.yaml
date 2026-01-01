@@ -4,4 +4,7 @@ properties:
       settings:
         id: Spotify.Spotify
         source: msstore
-  configurationVersion: 0.2.0
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      settings:
+        id: VLC.VLC
+  configurationVersion: 0.2.1
