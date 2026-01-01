@@ -12,6 +12,7 @@ properties:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Spotify.Spotify
+        source: msstore
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Notion.Notion
