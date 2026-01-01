@@ -12,4 +12,7 @@ properties:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: PawelSalawa.SQLiteStudio
-  configurationVersion: 0.2.0
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      settings:
+        id: GitHub.GitHubDesktop    
+  configurationVersion: 0.2.1
