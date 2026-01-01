@@ -8,8 +8,8 @@ properties:
         id: Postman.Postman
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
-        id: Microsoft.VisualStudio.Community.2022
+        id: Microsoft.VisualStudio.Community # Visual Studio Community Edition
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: PawelSalawa.SQLiteStudio
-  configurationVersion: 0.1.1
+  configurationVersion: 0.2.0
