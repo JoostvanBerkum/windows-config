@@ -1,10 +1,8 @@
 properties:
   resources:
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
+- resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
-        id: Spotify.Spotify
+        id: 9NCBCSZMSX81  # De exacte Store-ID voor Spotify
         source: msstore
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      settings:
-        id: VLC.VLC
-  configurationVersion: 0.2.1
+        installMode: silent
+  configurationVersion: 0.2.2
