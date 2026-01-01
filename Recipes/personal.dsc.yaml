@@ -11,9 +11,5 @@ properties:
         id: Python.Python.3.14
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
-        id: Spotify.Spotify
-        source: msstore
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      settings:
         id: Notion.Notion
   configurationVersion: 0.2.0
