@@ -23,6 +23,8 @@
 $username = "JoostvanBerkum"
 $branch   = "main"
 
+Write-Host "Versie 2.4 van start-here.ps1" -ForegroundColor Cyan
+
 # Stap 0: Voorbereiding en Basisgereedschap
 Write-Host "Stap 0: Voorbereiding en basisgereedschap..." -ForegroundColor Cyan
 
