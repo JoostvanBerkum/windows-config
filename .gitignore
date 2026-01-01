@@ -1,0 +1,8 @@
+# Windows system files
+[Dd]esktop.ini
+thumbs.db
+.DS_Store
+
+# Temporary files
+*.tmp
+*.log

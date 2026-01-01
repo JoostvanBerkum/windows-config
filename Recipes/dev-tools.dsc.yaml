@@ -1,0 +1,15 @@
+properties:
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      settings:
+        id: Atlassian.Sourcetree
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      settings:
+        id: Postman.Postman
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      settings:
+        id: Microsoft.VisualStudio.Community.2022
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      settings:
+        id: SQLiteStudio.SQLiteStudio
+  configurationVersion: 0.1.0
