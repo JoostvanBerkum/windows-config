@@ -1,5 +1,6 @@
 # =================================================================
-# MASTER SETUP SCRIPT - Joost van Berkum (Versie 2.2 - 2024-06-10)
+# MASTER SETUP SCRIPT - Joost van Berkum (Versie 2.4 2026-01-01)
+# =================================================================
 # Dit script automatiseert de initiële setup van een Windows 10/11 systeem.
 # Het voert de volgende stappen uit:
 # 0. Voorbereiding en installatie van basisgereedschap (Windows Terminal, Git)
@@ -12,10 +13,12 @@
 # Zorg ervoor dat de uitvoeringsbeleid is ingesteld op 'Bypass' of 'Unrestricted'.
 # Voor vragen of aanpassingen, neem contact op met Joost van Berkum.
 # Versiegeschiedenis:
-# - 2.2 (2024-06-10): Toegevoegd --silent aan winget installaties in Stap 0.
-# - 2.1 (2024-05-15): Toegevoegd pauze na winget configure om stabiliteit te verbeteren.
-# - 2.0 (2024-04-01): Overgeschakeld naar winget configure voor recepteninstallatie.
-# - 1.0 (2023-12-20): Eerste versie van het setup script.
+# - 2.4 2026-01-01): Toegevoegd --verbose aan winget configure opdrachten voor betere logging.
+# - 2.3 2026-01-01): Verwijderd onnodige --accept-source-agreements bij winget configure opdrachten.
+# - 2.2 2026-01-01): Toegevoegd --silent aan winget installaties in Stap 0.
+# - 2.1 2026-01-01) : Toegevoegd pauze na winget configure om stabiliteit te verbeteren.
+# - 2.0 2026-01-01) : Overgeschakeld naar winget configure voor recepteninstallatie.
+# - 1.0 2026-01-01) : Eerste versie van het setup script.
 # =================================================================
 $username = "JoostvanBerkum"
 $branch   = "main"
@@ -51,7 +54,7 @@ Invoke-RestMethod -Uri $prefScript | PowerShell -ExecutionPolicy Bypass
 
 # Stap 3: WinGet Recepten uitvoeren
 Write-Host "Stap 3: Software installeren via WinGet Recepten..." -ForegroundColor Yellow
-$recepten = @("business.dsc.yaml", "dev-tools.dsc.yaml", "personal.dsc.yaml")
+$recepten = @("business.dsc.yaml", "dev-tools.dsc.yaml", "personal.dsc.yaml", "spotify.dsc.yaml")
 
 foreach ($recept in $recepten) {
     $antwoord = Read-Host "Wil je het recept '$recept' uitvoeren? (y/n)"
@@ -60,7 +63,7 @@ foreach ($recept in $recepten) {
         $url = "https://raw.githubusercontent.com/$username/windows-config/$branch/Recipes/$recept"
         Write-Host "Bezig met uitvoeren van $recept..." -ForegroundColor White
         # --verbose toegevoegd zodat je precies ziet wat er gebeurt
-        winget configure -f $url --accept-configuration-agreements --accept-source-agreements  --disable-interactivity --verbose
+        winget configure -f $url --accept-configuration-agreements --verbose
     } else {
         Write-Host "Recept $recept overgeslagen." -ForegroundColor Gray
     }
