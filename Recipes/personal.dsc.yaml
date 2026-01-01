@@ -2,5 +2,6 @@ properties:
   resources:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
-        id: Python.Python.3.14  
+        id: Spotify.Spotify
+        source: msstore
   configurationVersion: 0.2.0
