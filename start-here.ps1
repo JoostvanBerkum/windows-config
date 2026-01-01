@@ -60,7 +60,7 @@ foreach ($recept in $recepten) {
         $url = "https://raw.githubusercontent.com/$username/windows-config/$branch/Recipes/$recept"
         Write-Host "Bezig met uitvoeren van $recept..." -ForegroundColor White
         # --verbose toegevoegd zodat je precies ziet wat er gebeurt
-        winget configure -f $url --accept-configuration-agreements --verbose
+        winget configure -f $url --accept-configuration-agreements --accept-source-agreements  --disable-interactivity --verbose
     } else {
         Write-Host "Recept $recept overgeslagen." -ForegroundColor Gray
     }
