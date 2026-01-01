@@ -2,32 +2,17 @@ properties:
   resources:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
-        id: Python.Python.3.12
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      settings:
-        id: Dashlane.Dashlane
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      settings:
-        id: Zen-Team.Zen-Browser
+        id: Zen-Team.Zen-Browser 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Akiflow.Akiflow
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
-        id: Python.Python.3.12
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      settings:
-        id: WhatsApp.WhatsApp
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      settings:
-        id: Line.Line
+        id: Python.Python.3.9
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Spotify.Spotify
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Notion.Notion
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      settings:
-        id: Microsoft.YourPhone # Dit is Phone Link
-  configurationVersion: 0.1.1
+  configurationVersion: 0.2.0
