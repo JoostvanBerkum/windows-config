@@ -1,42 +1,41 @@
 # =================================================================
-# MASTER SETUP SCRIPT
+# GEOPTIMALISEERD MASTER SETUP SCRIPT - Joost van Berkum
 # =================================================================
-# Setup script voor een schone machine
-$username = "joostvanberkum" # <--- VUL HIER JE USERNAME IN (ZONDER @)
+$username = "JoostvanBerkum" # Let op hoofdletters
 $branch   = "main"
 
-# 1. PRE-FLIGHT CHECK: Gereedschap installeren
-Write-Host "Stap 0: Installeren van basisgereedschap..." -ForegroundColor Cyan
+# Stap 0: WinGet repareren en Basisgereedschap
+Write-Host "Stap 0: WinGet bronnen herstellen en basisgereedschap installeren..." -ForegroundColor Cyan
+# Forceer winget bronnen om de certificaatfout te omzeilen
+winget source reset --force
 
-# Installeer Terminal voor een betere interface
-winget install --id Microsoft.WindowsTerminal -e --accept-source-agreements
+# Installeer tools specifiek van de 'winget' bron om de MSStore-fout te negeren
+winget install --id Microsoft.WindowsTerminal -e --source winget --accept-package-agreements --accept-source-agreements
+winget install --id Git.Git -e --source winget --accept-package-agreements --accept-source-agreements
 
-# Installeer Git (essentieel voor verder gebruik)
-winget install --id Git.Git -e --accept-source-agreements
-
-Write-Host "Bezig met ophalen van configuratie voor $username..." -ForegroundColor Cyan
-
-# 1. Taal en Regio
+# Stap 1: Taal en Regio
 Write-Host "Stap 1: Taal en Regio instellen..." -ForegroundColor Cyan
 $Languages = New-Object System.Collections.Generic.List[string]
 $Languages.Add("en-US")
 $Languages.Add("nl-NL")
 Set-WinUserLanguageList -LanguageList $Languages -Force
 
-# 2. Voorkeuren instellen (Dark mode, Taakbalk, Taal)
+# Stap 2: Systeemvoorkeuren
 Write-Host "Stap 2: Systeemvoorkeuren toepassen..." -ForegroundColor Yellow
-$prefScript = "https://raw.githubusercontent.com/$username/windows-config/$branch/scripts/set-preferences.ps1"
+# We gebruiken de exacte hoofdletters van je mappen: Scripts
+$prefScript = "https://raw.githubusercontent.com/$username/windows-config/$branch/Scripts/set-preferences.ps1"
 Invoke-RestMethod -Uri $prefScript | PowerShell -ExecutionPolicy Bypass
 
-# 3. WinGet Recepten uitvoeren
-Write-Host "Stap 2: Software installeren via WinGet..." -ForegroundColor Yellow
+# Stap 3: WinGet Recepten
+Write-Host "Stap 3: Software installeren via WinGet Recepten..." -ForegroundColor Yellow
 $recepten = @("business.dsc.yaml", "dev-tools.dsc.yaml", "personal.dsc.yaml")
 
 foreach ($recept in $recepten) {
-    $url = "https://raw.githubusercontent.com/$username/windows-config/$branch/recipes/$recept"
-    Write-Host "Uitvoeren van recept: $recept" -ForegroundColor White
-    winget configure -f $url --accept-configuration-agreements --accept-source-agreements
+    # We gebruiken de exacte hoofdletters van je mappen: Recipes
+    $url = "https://raw.githubusercontent.com/$username/windows-config/$branch/Recipes/$recept"
+    Write-Host "--- Uitvoeren van recept: $recept ---" -ForegroundColor White
+    # Verwijderde --accept-source-agreements (bestaat niet voor configure)
+    winget configure -f $url --accept-configuration-agreements
 }
 
 Write-Host "INSTALLATIE VOLTOOID!" -ForegroundColor Green
-Write-Host "Systeem is ingericht! Start de machine opnieuw op voor de taalinstellingen." -ForegroundColor Green
