@@ -36,10 +36,13 @@ $Spotify      = $false     # $true voor Spotify recept
 $username = "JoostvanBerkum"
 $branch   = "main"
 
-Write-Host "Versie 2.4 van start-here.ps1" -ForegroundColor Cyan
+Write-Host "Versie 2.5 van start-here.ps1" -ForegroundColor Cyan
 
 # Stap 0: Voorbereiding en Basisgereedschap
 Write-Host "Stap 0: Voorbereiding en basisgereedschap..." -ForegroundColor Cyan
+
+# Stel de geografische regio in op Nederland (GeoID 176)
+Set-WinHomeLocation -GeoId 176
 
 # Schakel de configuratie-modus in (lost de rode foutmelding op)
 winget configure --enable
@@ -88,7 +91,7 @@ foreach ($recept in $receptenMap.Keys) {
         Write-Host "Bezig met uitvoeren van $recept..." -ForegroundColor White
         
         # Voer winget configure uit
-        winget configure -f $url --accept-configuration-agreements --verbose
+        winget configure -f $url --accept-configuration-agreements --accept-source-agreements --verbose
     } else {
         Write-Host "Recept $recept overgeslagen (variabele staat op false)." -ForegroundColor Gray
     }
