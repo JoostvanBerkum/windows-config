@@ -69,7 +69,7 @@ foreach ($app in $criticalApps) {
 }
 
 # Chrome Enterprise (negeert de hash-fout van de consumentenversie)
-winget install --id Google.Chrome.Enterprise -e --source winget --accept-package-agreements --accept-source-agreements --silent
+winget install --id Google.Chrome.EXE -e --source winget --accept-package-agreements --accept-source-agreements --silent
 
 # Citrix via de Store (omzeilt de dode 404-link op hun eigen server)
 winget install --id 9N6SGZ30XPR9 -e --source msstore --accept-package-agreements --accept-source-agreements --silent
