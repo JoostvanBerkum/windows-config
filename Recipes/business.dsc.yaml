@@ -15,20 +15,10 @@ properties:
         id: 7zip.7zip
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
-        id: Citrix.Workspace
-        source: winget
-        installMode: silent
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      settings:
         id: Ghisler.TotalCommander
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: AgileBits.1Password
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      settings:
-        id: Google.Chrome.Enterprise
-        source: winget
-        installMode: silent
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: TechSmith.Snagit.2024
