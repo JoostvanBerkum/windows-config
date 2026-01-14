@@ -74,7 +74,7 @@ winget install --id Google.Chrome.EXE -e --source winget --accept-package-agreem
 # 3. Citrix installeren via de 'winget' bron (NIET de msstore bron)
 # We gebruiken --source winget om de regio-vragen van de Store te omzeilen
 Write-Host "Citrix Workspace installeren via winget-bron..." -ForegroundColor White
-winget install --id Citrix.Workspace -e --source winget --accept-package-agreements --accept-source-agreements --silent
+winget install --id Citrix.Workspace.LTSR -e --source winget --accept-package-agreements --accept-source-agreements --silent
 
 # Stap 1: Taal en Toetsenbord (Beide US-International)
 Write-Host "Stap 1: Taal instellen met US-International toetsenbord..." -ForegroundColor Cyan
