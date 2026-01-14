@@ -62,11 +62,17 @@ winget configure --enable
 winget source reset --force
 
 # Hier werkt --accept-source-agreements wél
-$criticalApps = @("Microsoft.WindowsTerminal", "Git.Git", "Google.Chrome", "Citrix.Workspace")
+$criticalApps = @("Microsoft.WindowsTerminal", "Git.Git")
 foreach ($app in $criticalApps) {
     Write-Host "Bezig met $app..." -ForegroundColor White
     winget install --id $app -e --source winget --accept-package-agreements --accept-source-agreements --silent
 }
+
+# Chrome Enterprise (negeert de hash-fout van de consumentenversie)
+winget install --id Google.Chrome.Enterprise -e --source winget --accept-package-agreements --accept-source-agreements --silent
+
+# Citrix via de Store (omzeilt de dode 404-link op hun eigen server)
+winget install --id 9N6SGZ30XPR9 -e --source msstore --accept-package-agreements --accept-source-agreements --silent
 
 # Stap 1: Taal en Toetsenbord (Beide US-International)
 Write-Host "Stap 1: Taal instellen met US-International toetsenbord..." -ForegroundColor Cyan
