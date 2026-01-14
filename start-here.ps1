@@ -62,19 +62,12 @@ winget configure --enable
 winget source reset --force
 
 # Hier werkt --accept-source-agreements wél
-$criticalApps = @("Microsoft.WindowsTerminal", "Git.Git")
+$criticalApps = @("Microsoft.WindowsTerminal", "Git.Git", "Google.Chrome.EXE", "Citrix.Workspace.LTSR")
 foreach ($app in $criticalApps) {
     Write-Host "Bezig met $app..." -ForegroundColor White
     winget install --id $app -e --source winget --accept-package-agreements --accept-source-agreements --silent
 }
-
-# Chrome Enterprise (negeert de hash-fout van de consumentenversie)
-winget install --id Google.Chrome.EXE -e --source winget --accept-package-agreements --accept-source-agreements --silent
-
-# 3. Citrix installeren via de 'winget' bron (NIET de msstore bron)
-# We gebruiken --source winget om de regio-vragen van de Store te omzeilen
-Write-Host "Citrix Workspace installeren via winget-bron..." -ForegroundColor White
-winget install --id Citrix.Workspace.LTSR -e --source winget --accept-package-agreements --accept-source-agreements --silent
+Start-Sleep -Seconds 5  # Korte pauze voor stabiliteit
 
 # Stap 1: Taal en Toetsenbord (Beide US-International)
 Write-Host "Stap 1: Taal instellen met US-International toetsenbord..." -ForegroundColor Cyan
