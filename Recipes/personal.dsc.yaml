@@ -2,6 +2,11 @@ properties:
   resources:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
+        id: Notion.Notion
+        source: winget
+        installMode: silent
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      settings:
         id: ArminOsaj.AutoDarkMode # De app voor automatische Dark/Light switch
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
@@ -12,7 +17,5 @@ properties:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Python.Python.3.14
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      settings:
-        id: Notion.Notion
+
   configurationVersion: 0.2.6
