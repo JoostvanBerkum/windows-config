@@ -1,5 +1,5 @@
 # =================================================================
-# MASTER SETUP SCRIPT - Joost van Berkum (Versie 2.5 2026-01-14)
+# MASTER SETUP SCRIPT - Joost van Berkum (Versie 2.6 2026-01-14)
 # =================================================================
 # Dit script automatiseert de initiële setup van een Windows 10/11 systeem.
 # Het voert de volgende stappen uit:
@@ -13,6 +13,7 @@
 # Zorg ervoor dat de uitvoeringsbeleid is ingesteld op 'Bypass' of 'Unrestricted'.
 # Voor vragen of aanpassingen, neem contact op met Joost van Berkum.
 # Versiegeschiedenis:
+# - 2.6 2026-01-14): Toegevoegd functie voor aangepaste Office installatie (E3 Shared Licensing).
 # - 2.5 2026-01-14): Toegevoegd AOfficeSuite recept optie in start-here.ps1.
 # - 2.4 2026-01-01): Toegevoegd --verbose aan winget configure opdrachten voor betere logging.
 # - 2.3 2026-01-01): Verwijderd onnodige --accept-source-agreements bij winget configure opdrachten.
@@ -24,76 +25,84 @@
 # =================================================================
 # CONFIGURATIE - Pas deze waarden aan naar wens
 # =================================================================
-#Selecteer welke recepten uitgevoerd moeten worden
-$DevTools    = $true      # $true voor Dev-tools recept
+$InstallDutch = $true      # $true om Nederlands als extra taal toe te voegen
 $Business     = $true      # $true voor Business recept
-$OfficeSuite  = $false     # $true voor Office Suite recept
-$Personal     = $false     # $true voor Personal recept
+$OfficeSuite  = $true      # $true voor Aangepaste Office (Word/Excel/PP)
+$DevTools     = $true      # $true voor Dev-tools recept
+$Personal     = $true      # $true voor Personal recept
 $Spotify      = $false     # $true voor Spotify recept
-# =================================================================
-
 
 $username = "JoostvanBerkum"
 $branch   = "main"
 
-Write-Host "Versie 2.5 van start-here.ps1" -ForegroundColor Cyan
+Write-Host "Versie 2.6 van start-here.ps1 wordt gestart..." -ForegroundColor Cyan
 
-# Stap 0: Voorbereiding en Basisgereedschap
-Write-Host "Stap 0: Voorbereiding en basisgereedschap..." -ForegroundColor Cyan
+# --- FUNCTIE VOOR OFFICE (ODT) ---
+function Install-OfficeCustom {
+    Write-Host "Bezig met aangepaste Office installatie (E3 Shared Licensing)..." -ForegroundColor Cyan
+    $workDir = "C:\Temp\OfficeSetup"
+    New-Item -ItemType Directory -Path $workDir -Force | Out-Null
 
-# Stel de geografische regio in op Nederland (GeoID 176)
-Set-WinHomeLocation -GeoId 176
+    $odtUrl = "https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_17328-20162.exe"
+    $xmlUrl = "https://raw.githubusercontent.com/$username/windows-config/$branch/Settings/OfficeConfig.xml"
 
-# Schakel de configuratie-modus in (lost de rode foutmelding op)
+    Invoke-WebRequest -Uri $odtUrl -OutFile "$workDir\odt.exe"
+    Invoke-WebRequest -Uri $xmlUrl -OutFile "$workDir\configuration.xml"
+
+    Start-Process -FilePath "$workDir\odt.exe" -ArgumentList "/extract:$workDir /quiet" -Wait
+    Start-Process -FilePath "$workDir\setup.exe" -ArgumentList "/configure $workDir\configuration.xml" -Wait
+    Write-Host "Office installatie voltooid!" -ForegroundColor Green
+}
+
+# Stap 0: Voorbereiding en "Moeilijke" Apps
+Write-Host "Stap 0: Voorbereiding en installatie van kritieke apps..." -ForegroundColor Cyan
+
+Set-WinHomeLocation -GeoId 176  # Nederland
 winget configure --enable
-
-# Pauzeer kort om winget klaar te laten zijn
-Start-Sleep -Seconds 5
-
-# Herstel winget bronnen (lost de MSStore certificaatfout op)
 winget source reset --force
 
-# Installeer tools met --silent en specifiek van de 'winget' bron
-winget install --id Microsoft.WindowsTerminal -e --source winget --accept-package-agreements --accept-source-agreements --silent
-winget install --id Git.Git -e --source winget --accept-package-agreements --accept-source-agreements --silent
+# Hier werkt --accept-source-agreements wél
+$criticalApps = @("Microsoft.WindowsTerminal", "Git.Git", "Google.Chrome", "Citrix.Workspace")
+foreach ($app in $criticalApps) {
+    Write-Host "Bezig met $app..." -ForegroundColor White
+    winget install --id $app -e --source winget --accept-package-agreements --accept-source-agreements --silent
+}
 
-# Stap 1: Taal en Regio
-Write-Host "Stap 1: Taal en Regio instellen..." -ForegroundColor Cyan
-$Languages = New-Object System.Collections.Generic.List[string]
-$Languages.Add("en-US")
-$Languages.Add("nl-NL")
-Set-WinUserLanguageList -LanguageList $Languages -Force
+# Stap 1: Taal en Toetsenbord (Beide US-International)
+Write-Host "Stap 1: Taal instellen met US-International toetsenbord..." -ForegroundColor Cyan
+$LanguageList = New-WinUserLanguageList -Language "en-US"
+$LanguageList[0].InputMethodTips.Clear()
+$LanguageList[0].InputMethodTips.Add('0409:00020409') # en-US met US-Intl
 
-# Stap 2: Systeemvoorkeuren toepassen
+if ($InstallDutch) {
+    $LanguageList.Add("nl-NL")
+    $LanguageList[1].InputMethodTips.Clear()
+    $LanguageList[1].InputMethodTips.Add('0413:00020409') # nl-NL met US-Intl
+}
+Set-WinUserLanguageList -LanguageList $LanguageList -Force
+
+# Stap 2: Systeemvoorkeuren
 Write-Host "Stap 2: Systeemvoorkeuren toepassen..." -ForegroundColor Yellow
-# Let op: 'Scripts' met hoofdletter S (zoals in jouw mappenstructuur)
 $prefScript = "https://raw.githubusercontent.com/$username/windows-config/$branch/Scripts/set-preferences.ps1"
 Invoke-RestMethod -Uri $prefScript | PowerShell -ExecutionPolicy Bypass
 
-# Stap 3: WinGet Recepten uitvoeren
+# Stap 3: WinGet Recepten & Office
+if ($OfficeSuite) { Install-OfficeCustom }
 
-Write-Host "Stap 3: Software installeren via WinGet Recepten..." -ForegroundColor Yellow
-
-# Koppel de variabelen aan de bestandsnamen
+Write-Host "Stap 3: DSC Recepten uitvoeren..." -ForegroundColor Yellow
 $receptenMap = @{
     "business.dsc.yaml"  = $Business
-    "officesuite.dsc.yaml" = $OfficeSuite
     "dev-tools.dsc.yaml" = $DevTools
     "personal.dsc.yaml"  = $Personal
     "spotify.dsc.yaml"   = $Spotify
 }
 
 foreach ($recept in $receptenMap.Keys) {
-    $moetUitvoeren = $receptenMap[$recept]
-    
-    if ($moetUitvoeren) {
+    if ($receptenMap[$recept]) {
         $url = "https://raw.githubusercontent.com/$username/windows-config/$branch/Recipes/$recept"
-        Write-Host "Bezig met uitvoeren van $recept..." -ForegroundColor White
-        
-        # Voer winget configure uit
-        winget configure -f $url --accept-configuration-agreements --accept-source-agreements --verbose
-    } else {
-        Write-Host "Recept $recept overgeslagen (variabele staat op false)." -ForegroundColor Gray
+        Write-Host "Bezig met $recept..." -ForegroundColor White
+        # GEEN --accept-source-agreements hier (veroorzaakt fout in image_25622b.png)
+        winget configure -f $url --accept-configuration-agreements --verbose
     }
 }
 
