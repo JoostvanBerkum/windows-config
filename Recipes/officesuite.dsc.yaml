@@ -1,0 +1,9 @@
+# Windows Productivity Configuration for Office Suite installation
+properties:
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Installeren van Microsoft Office Suite
+      settings:
+        id: Microsoft.Office
+        source: winget

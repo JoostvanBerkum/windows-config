@@ -2,6 +2,9 @@ properties:
   resources:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
+        id: ArminOsaj.AutoDarkMode # De app voor automatische Dark/Light switch
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      settings:
         id: Zen-Team.Zen-Browser 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
@@ -12,4 +15,4 @@ properties:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Notion.Notion
-  configurationVersion: 0.2.5
+  configurationVersion: 0.2.6

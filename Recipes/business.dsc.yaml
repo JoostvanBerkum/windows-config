@@ -2,12 +2,6 @@
 properties:
   resources:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
-      directives:
-        description: Installeren van de basis Essentials
-      settings:
-        id: Microsoft.Office
-        source: winget
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Microsoft.PowerToys 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
@@ -21,7 +15,9 @@ properties:
         id: 7zip.7zip
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
-        id: Citrix.Workspace.LTSR
+        id: Citrix.Workspace
+        source: winget
+        installMode: silent
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Ghisler.TotalCommander
@@ -31,10 +27,9 @@ properties:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: Google.Chrome
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      settings:
-        id: ArminOsaj.AutoDarkMode # De app voor automatische Dark/Light switch
+        source: winget
+        installMode: silent
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       settings:
         id: TechSmith.Snagit.2025
-  configurationVersion: 0.2.2
+  configurationVersion: 0.2.3

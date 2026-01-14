@@ -1,5 +1,5 @@
 # =================================================================
-# MASTER SETUP SCRIPT - Joost van Berkum (Versie 2.4 2026-01-01)
+# MASTER SETUP SCRIPT - Joost van Berkum (Versie 2.5 2026-01-14)
 # =================================================================
 # Dit script automatiseert de initiële setup van een Windows 10/11 systeem.
 # Het voert de volgende stappen uit:
@@ -13,6 +13,7 @@
 # Zorg ervoor dat de uitvoeringsbeleid is ingesteld op 'Bypass' of 'Unrestricted'.
 # Voor vragen of aanpassingen, neem contact op met Joost van Berkum.
 # Versiegeschiedenis:
+# - 2.5 2026-01-14): Toegevoegd AOfficeSuite recept optie in start-here.ps1.
 # - 2.4 2026-01-01): Toegevoegd --verbose aan winget configure opdrachten voor betere logging.
 # - 2.3 2026-01-01): Verwijderd onnodige --accept-source-agreements bij winget configure opdrachten.
 # - 2.2 2026-01-01): Toegevoegd --silent aan winget installaties in Stap 0.
@@ -20,6 +21,18 @@
 # - 2.0 2026-01-01) : Overgeschakeld naar winget configure voor recepteninstallatie.
 # - 1.0 2026-01-01) : Eerste versie van het setup script.
 # =================================================================
+# =================================================================
+# CONFIGURATIE - Pas deze waarden aan naar wens
+# =================================================================
+#Selecteer welke recepten uitgevoerd moeten worden
+$DevTools    = $true      # $true voor Dev-tools recept
+$Business     = $true      # $true voor Business recept
+$OfficeSuite  = $false     # $true voor Office Suite recept
+$Personal     = $false     # $true voor Personal recept
+$Spotify      = $false     # $true voor Spotify recept
+# =================================================================
+
+
 $username = "JoostvanBerkum"
 $branch   = "main"
 
@@ -55,29 +68,31 @@ $prefScript = "https://raw.githubusercontent.com/$username/windows-config/$branc
 Invoke-RestMethod -Uri $prefScript | PowerShell -ExecutionPolicy Bypass
 
 # Stap 3: WinGet Recepten uitvoeren
-Write-Host "Stap 3: Software installeren via WinGet Recepten..." -ForegroundColor Yellow
-$recepten = @("business.dsc.yaml", "dev-tools.dsc.yaml", "personal.dsc.yaml", "spotify.dsc.yaml")
 
-foreach ($recept in $recepten) {
-    $antwoord = Read-Host "Wil je het recept '$recept' uitvoeren? (y/n)"
+Write-Host "Stap 3: Software installeren via WinGet Recepten..." -ForegroundColor Yellow
+
+# Koppel de variabelen aan de bestandsnamen
+$receptenMap = @{
+    "business.dsc.yaml"  = $Business
+    "officesuite.dsc.yaml" = $OfficeSuite
+    "dev-tools.dsc.yaml" = $DevTools
+    "personal.dsc.yaml"  = $Personal
+    "spotify.dsc.yaml"   = $Spotify
+}
+
+foreach ($recept in $receptenMap.Keys) {
+    $moetUitvoeren = $receptenMap[$recept]
     
-    if ($antwoord -eq 'y') {
+    if ($moetUitvoeren) {
         $url = "https://raw.githubusercontent.com/$username/windows-config/$branch/Recipes/$recept"
         Write-Host "Bezig met uitvoeren van $recept..." -ForegroundColor White
-        # --verbose toegevoegd zodat je precies ziet wat er gebeurt
+        
+        # Voer winget configure uit
         winget configure -f $url --accept-configuration-agreements --verbose
     } else {
-        Write-Host "Recept $recept overgeslagen." -ForegroundColor Gray
+        Write-Host "Recept $recept overgeslagen (variabele staat op false)." -ForegroundColor Gray
     }
 }
-# Alternatieve automatische uitvoering zonder prompts:
-# foreach ($recept in $recepten) {
-#     # Let op: 'Recipes' met hoofdletter R
-#     $url = "https://raw.githubusercontent.com/$username/windows-config/$branch/Recipes/$recept"
-#     Write-Host "--- Uitvoeren van recept: $recept ---" -ForegroundColor White
-#     # Geen '--accept-source-agreements' meer hier (bestaat niet voor configure)
-#     winget configure -f $url --accept-configuration-agreements --verbose
-# }
 
 Write-Host "INSTALLATIE VOLTOOID!" -ForegroundColor Green
 Read-Host "Druk op Enter om dit venster te sluiten..."
