@@ -25,10 +25,10 @@
 # =================================================================
 # CONFIGURATIE - Pas deze waarden aan naar wens
 # =================================================================
-$InstallDutch = $false     # $true om Nederlands als extra taal toe te voegen
-$Business     = $false       # $true voor Business recept
-$OfficeSuite  = $false      # $true voor Aangepaste Office (Word/Excel/PP)
-$DevTools     = $false      # $true voor Dev-tools recept
+$InstallDutch = $true     # $true om Nederlands als extra taal toe te voegen
+$Business     = $true       # $true voor Business recept
+$OfficeSuite  = $true    # $true voor Aangepaste Office (Word/Excel/PP)
+$DevTools     = $true      # $true voor Dev-tools recept
 $Personal     = $false      # $true voor Personal recept
 $Spotify      = $false     # $true voor Spotify recept
 
